@@ -30,7 +30,7 @@ initializeDbAndServer();
 
 const authenticationToken = (request, response, next) => {
   let jwtToken;
-  const authHeader = request.header["Authorization"];
+  const authHeader = request.headers["authorization"];
 
   if (authHeader !== undefined) {
     jwtToken = authHeader.split(" ")[1];
@@ -38,8 +38,8 @@ const authenticationToken = (request, response, next) => {
   if (jwtToken === undefined) {
     response.status(401);
     response.send("Invalid JWT Token");
-    // console.log(jwtToken);
-    //console.log(authHeader);
+    console.log(jwtToken);
+    console.log(authHeader);
   } else {
     jwt.verify(jwtToken, "my_secrete_token", async (error, payload) => {
       if (error) {
